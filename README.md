@@ -1,18 +1,38 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
+- [Tech Stack](#tech-stack)
+- [Setup](#setup)
+- [Learn More](#learn-more)
+- [Deploy on Vercel](#deploy-on-vercel)
+
+## Tech Stack
+
+- [React](https://reactjs.org/)
+- [Next](https://nextjs.org/)
+- [Tailwind](https://tailwindcss.com/)
+
+## Setup
 
 First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+1. Clone the repo
+    ````bash
+    git clone https://github.com/kennypanjaitan/Tubes3_13521003.git
+    ````
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies
+    
+    ```bash
+    yarn
+    ```
+
+3. Run the development server
+    ```bash
+    yarn dev
+    ```
+
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
