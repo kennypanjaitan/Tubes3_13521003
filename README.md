@@ -34,6 +34,23 @@ First, run the development server:
 
 4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+5. For front-end, after you make your component, you can see your result by editing ```app/page.tsx``` by importing the new const, then replace the old const available in page.tsx with the new const or just add that new const below it.
+
+    ```tsx
+    import {/* const name */} from {/* route to your component\'s file */}
+    import Sidebar from './contexts/Sidebar'
+
+    const Home = (): JSX.Element => {
+
+        return (
+            <div>
+                <{/* const name */} />
+                <Sidebar />
+            </div>
+        )
+    }
+    ```
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 [http://localhost:3000/api/hello](http://localhost:3000/api/hello) is an endpoint that uses [Route Handlers](https://beta.nextjs.org/docs/routing/route-handlers). This endpoint can be edited in `app/api/hello/route.ts`.
