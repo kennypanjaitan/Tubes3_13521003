@@ -2,12 +2,14 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 
 import Sidebar from './contexts/Sidebar'
+import Chat from './contexts/Chat'
 
 const Home = (): JSX.Element => {
 
   return (
     <div>
       <Sidebar />
+      <Chat />
     </div>
   )
 }
