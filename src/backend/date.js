@@ -45,28 +45,30 @@ function monthToInt(month) {
     return true;
   }
 
-  function main() {
-    const readline = require('readline').createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
+//   function main() {
+//     const readline = require('readline').createInterface({
+//       input: process.stdin,
+//       output: process.stdout
+//     });
   
-    readline.question('Please enter a string containing a date (DD/MM/YYYY): ', (inputString) => {
-      readline.close();
-      const dateRegex = /\b(\d{1,2})\/(\d{1,2})\/(\d{1,})\b/;
-      const dateMatch = inputString.match(dateRegex);
+//     readline.question('Please enter a string containing a date (DD/MM/YYYY): ', (inputString) => {
+//       readline.close();
+//       const dateRegex = /\b(\d{1,2})\/(\d{1,2})\/(\d{1,})\b/;
+//       const dateMatch = inputString.match(dateRegex);
      
-      const inputDate = dateMatch[0];
-      const dateParts = inputDate.split("/");
-      const day = parseInt(dateParts[0]);
-      const month = parseInt(dateParts[1]);
-      const year = parseInt(dateParts[2]);
-      if (!validateDate(inputDate)) {
-        console.log("Invalid input format. Please enter date in DD/MM/YYYY format.");
-        return;
-      }
-      const dayOfWeek = getDayOfWeek(year, month, day);
-      console.log(`The day of the week for ${inputDate} is ${dayOfWeek}.`);
-    });
-  }
-main();
+//       const inputDate = dateMatch[0];
+//       const dateParts = inputDate.split("/");
+//       const day = parseInt(dateParts[0]);
+//       const month = parseInt(dateParts[1]);
+//       const year = parseInt(dateParts[2]);
+//       if (!validateDate(inputDate)) {
+//         console.log("Invalid input format. Please enter date in DD/MM/YYYY format.");
+//         return;
+//       }
+//       const dayOfWeek = getDayOfWeek(year, month, day);
+//       console.log(`The day of the week for ${inputDate} is ${dayOfWeek}.`);
+//     });
+//   }
+// main();
+
+export default getDayOfWeek;

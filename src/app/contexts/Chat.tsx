@@ -1,5 +1,6 @@
 'use client'
 import { useState, useRef } from 'react';
+import parser from '../../backend/parser';
 
 const Chat = (): JSX.Element => {
   const [messages, setMessages] = useState<string[]>([]);
@@ -86,6 +87,7 @@ const Chat = (): JSX.Element => {
             }
             if (event.key === 'Enter' && !event.shiftKey) {
               handleSendMessage(`Me: ${event.currentTarget.value}`);
+              handleSendMessage(`Bot: ${parser(event.currentTarget.value)}`);
               event.currentTarget.value = '';
               chatRef.current?.scrollTo(0, chatRef.current.scrollHeight);
               event.preventDefault();
