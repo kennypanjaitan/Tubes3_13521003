@@ -3,7 +3,8 @@ import getDayOfWeek from './date';
 
 function parser(str) {
     if (isDate(str)) {
-        return getDayOfWeek(...Object.values(parseDate(str)));
+        var { year, monthRes, day, dayRes } = getDayOfWeek(...Object.values(parseDate(str)));
+        return monthRes + " " + day + " " + year + " is " + dayRes ;
         // return 'aaaaa'
     }
     else if (isMathExpression(str)) {

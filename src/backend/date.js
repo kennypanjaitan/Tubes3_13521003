@@ -23,8 +23,11 @@ function monthToInt(month) {
     }
   
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     const calculate = ((year + Math.floor(year / 4) - Math.floor(year / 100) + Math.floor(year / 400) + magicNumber[month - 1] + day) % 7);
-    return days[calculate];
+    const dayRes = days[calculate];
+    const monthRes = months[month-1];
+    return {year, monthRes, day, dayRes};
   }
 
   function validateDate(date) {
