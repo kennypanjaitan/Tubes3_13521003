@@ -2,6 +2,19 @@
 import { useState, useRef } from 'react';
 import parser from '../../backend/parser';
 
+
+async function saveUserQ(message: string, answer: string) {
+  const response = await fetch('/api/history', {
+    method: 'POST',
+    body: JSON.stringify({ messages: message, answers: answer }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return await response.json();
+}
+
 const Chat = (): JSX.Element => {
   const [messages, setMessages] = useState<string[]>([]);
   const chatRef = useRef<HTMLDivElement>(null);
@@ -73,13 +86,13 @@ const Chat = (): JSX.Element => {
             width: '600px',
             font: 'Inter',
             fontSize: '16px',
-            marginBottom: '8px',
+            marginBottom: '8px', 
             top: '580px',
             left: '600px',
             position: 'absolute',
             whiteSpace: 'pre-wrap',
           }}
-          onKeyDown={(event) => {
+          onKeyDown={async (event) => {
             if (event.key === 'Enter' && event.currentTarget.value.trim() === '') {
               event.preventDefault();
               handleSendMessage('Bot: Please enter a message.');
@@ -88,6 +101,7 @@ const Chat = (): JSX.Element => {
             if (event.key === 'Enter' && !event.shiftKey) {
               handleSendMessage(`Me: ${event.currentTarget.value}`);
               handleSendMessage(`Bot: ${parser(event.currentTarget.value)}`);
+              await saveUserQ(event.currentTarget.value, parser(event.currentTarget.value));
               event.currentTarget.value = '';
               chatRef.current?.scrollTo(0, chatRef.current.scrollHeight);
               event.preventDefault();
