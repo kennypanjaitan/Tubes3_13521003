@@ -3,11 +3,13 @@ import { Inter } from 'next/font/google'
 
 import Sidebar from './contexts/Sidebar'
 import Chat from './contexts/Chat'
+import HistoryList from './contexts/HistoryList'
 
 const Home = (): JSX.Element => {
 
   return (
     <div>
+      <HistoryList />
       <Sidebar />
       <Chat />
     </div>
