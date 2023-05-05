@@ -1,6 +1,44 @@
 'use client'
 import { useState, useRef } from 'react';
-// import parser from '../../backend/parser';
+import parser from '../../backend/parser';
+import mysql from 'mysql2';
+import net from 'net';
+
+async function testRow() {
+  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+
+  const connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'bintang433',
+    database: 'mydb',
+  });
+
+  try {
+    // run SQL queries here using the connection object
+    const [rows, fields] = await connection.execute('SELECT * FROM my_table');
+    console.log(rows);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    // close the connection when done
+    connection.end();
+  }
+}
+
+async function saveUserQ(message: string, answer: string) {
+  const response = await fetch('/api/history', {
+    method: 'POST',
+    body: JSON.stringify({ messages: message, answers: answer }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status} - ${response.statusText}`);
+  }
+  return await response.json();
+}
+
+
 
 const Chat = (): JSX.Element => {
   const [messages, setMessages] = useState<string[]>([]);
@@ -83,7 +121,7 @@ const Chat = (): JSX.Element => {
             position: 'absolute',
             whiteSpace: 'pre-wrap',
           }}
-          onKeyDown={(event) => {
+          onKeyDown={async (event) => {
             if (event.key === 'Enter' && event.currentTarget.value.trim() === '') {
               event.preventDefault();
               handleSendMessage('Bot: Please enter a message.');
