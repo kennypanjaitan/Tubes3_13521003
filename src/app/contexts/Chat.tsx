@@ -1,7 +1,30 @@
 'use client'
 import { useState, useRef } from 'react';
 import parser from '../../backend/parser';
+import mysql from 'mysql2';
+import net from 'net';
 
+async function testRow() {
+  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+
+  const connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'bintang433',
+    database: 'mydb',
+  });
+
+  try {
+    // run SQL queries here using the connection object
+    const [rows, fields] = await connection.execute('SELECT * FROM my_table');
+    console.log(rows);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    // close the connection when done
+    connection.end();
+  }
+}
 
 async function saveUserQ(message: string, answer: string) {
   const response = await fetch('/api/history', {
@@ -10,10 +33,12 @@ async function saveUserQ(message: string, answer: string) {
   });
 
   if (!response.ok) {
-    throw new Error('Network response was not ok');
+    throw new Error(`Error: ${response.status} - ${response.statusText}`);
   }
   return await response.json();
 }
+
+
 
 const Chat = (): JSX.Element => {
   const [messages, setMessages] = useState<string[]>([]);
@@ -99,12 +124,18 @@ const Chat = (): JSX.Element => {
               return;
             }
             if (event.key === 'Enter' && !event.shiftKey) {
-              handleSendMessage(`Me: ${event.currentTarget.value}`);
-              handleSendMessage(`Bot: ${parser(event.currentTarget.value)}`);
-              await saveUserQ(event.currentTarget.value, parser(event.currentTarget.value));
-              event.currentTarget.value = '';
-              chatRef.current?.scrollTo(0, chatRef.current.scrollHeight);
-              event.preventDefault();
+              try {
+                handleSendMessage(`Me: ${event.currentTarget.value}`);
+                handleSendMessage(`Bot: ${parser(event.currentTarget.value)}`);
+                // await saveUserQ(event.currentTarget.value, parser(event.currentTarget.value));
+                testRow();
+                console.log('---');
+                event.currentTarget.value = '';
+                chatRef.current?.scrollTo(0, chatRef.current.scrollHeight);
+                event.preventDefault();
+              } catch (error) {
+                console.error(error);
+              }
             }
           }}
         />

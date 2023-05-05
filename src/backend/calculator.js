@@ -107,7 +107,7 @@ function evaluateExpression(a, b, operator) {
 }
 
 function main(){
-        const inputExpr = '4 *';
+    const inputExpr = '4 *';
 
     try 
     {
