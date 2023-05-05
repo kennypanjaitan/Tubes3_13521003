@@ -1,51 +1,14 @@
 'use client'
 import { useState, useRef } from 'react';
 import parser from '../../backend/parser';
-import mysql from 'mysql2';
-import net from 'net';
-
-async function testRow() {
-  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-
-  const connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'bintang433',
-    database: 'mydb',
-  });
-
-  try {
-    // run SQL queries here using the connection object
-    const [rows, fields] = await connection.execute('SELECT * FROM my_table');
-    console.log(rows);
-  } catch (error) {
-    console.error(error);
-  } finally {
-    // close the connection when done
-    connection.end();
-  }
-}
-
-async function saveUserQ(message: string, answer: string) {
-  const response = await fetch('/api/history', {
-    method: 'POST',
-    body: JSON.stringify({ messages: message, answers: answer }),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Error: ${response.status} - ${response.statusText}`);
-  }
-  return await response.json();
-}
-
 
 
 const Chat = (): JSX.Element => {
   const [messages, setMessages] = useState<string[]>([]);
   const chatRef = useRef<HTMLDivElement>(null);
-  const [isBot, setIsBot] = useState();
+  const [isBot, setIsBot] = useState(false);
 
-  const handleSendMessage = (message: string) => {
+  const   handleSendMessage = (message: string) => {
     setMessages([...messages, message]);
     chatRef.current?.scrollTo(0, chatRef.current.scrollHeight);
   };
@@ -57,7 +20,7 @@ const Chat = (): JSX.Element => {
         ref={chatRef}
         className="chat chat-end"
         style={{
-          top: '0px',
+          top: '20px',
           height: '890px',
           width: '1300px',
           left: '600px',
@@ -129,11 +92,11 @@ const Chat = (): JSX.Element => {
             }
             if (event.key === 'Enter' && !event.shiftKey) {
               if (isBot){
-                // setIsBot(false);
-                handleSendMessage(`Bot: ${(event.currentTarget.value)}`);
+                setIsBot(false);
+                handleSendMessage(`Bot: ${parser(event.currentTarget.value)}`);
               }
               else{
-                // setIsBot(true);
+                setIsBot(true);
                 handleSendMessage(`Me: ${event.currentTarget.value}`);
               }
               event.currentTarget.value = '';
